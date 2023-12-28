@@ -6,3 +6,5 @@
 # running the flask application: 
 # python app.py
 
+# web app is deployed via render:
+https://spam-classification-for-emails-new.onrender.com
