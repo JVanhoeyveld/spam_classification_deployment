@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>
+    Spam Classifier
+    </title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        button {
+            color: white;
+            background-color: lightseagreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-mail Spam Classifier</h1>
+    <div>
+        <!-- when clicking submit button (a post request) the /predict route will be used (not allowed on home page)-->
+        <form method="POST" action="/predict">
+            <!-- you can refer in app.py to whatever is input by the user with the name tag-->
+            <textarea name="mail_text" placeholder="Enter the e-mail content" rows="12" cols="60">{{text}}</textarea>
+        <div>
+            <button>Submit</button>
+            <!--The reset will be a link to the home page (enforcing a GET request wich will cause the placeholder to appear again)-->
+            <a href="/">Reset</a>
+        </div>
+        </form>
+    </div>
+    <div>
+        <!--show the predicted output of the model, a parameter of render_template in app.py -->
+        {% if spam_indicator=='SPAM' %}
+        <p style='color: red;'> {{spam_indicator}} </p>
+        {% else %}
+        <p style='color: green;'> {{spam_indicator}} </p>
+        {% endif %}
+    </div>
+</body>
+</html>
