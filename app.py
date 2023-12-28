@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+import pickle
 
 #load the models
 file = open("models/cv.pkl",'rb')
