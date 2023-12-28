@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request
-import pickle
+from flask import Flask, render_template, request, jsonify
 
 #load the models
 file = open("models/cv.pkl",'rb')
@@ -32,6 +31,23 @@ def predict():
     else:
         prediction = 'NO SPAM'
     return render_template('index.html', text=mail_text, spam_indicator=prediction)
+
+
+#create an API that accepts JSON data as input e.g. {'content': 'this is the mail message'} and returns a JSON response
+@app.route('/api/predict', methods=["POST"])
+def api_predict():
+    data = request.get_json(force=True) #get input json data
+    mail_text = data['content'] #the input json data holds the email within the content key
+    mail_text_count_vectorized = tokenizer.transform([mail_text])
+    prediction = int(model.predict(mail_text_count_vectorized))
+    if prediction==1:
+        prediction = 'SPAM'
+    else:
+        prediction = 'NO SPAM'
+    return jsonify(
+        {'prediction': prediction,
+         'email text': mail_text}
+    )
 
 
 #let's run the web application locally 
